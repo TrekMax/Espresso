@@ -18,7 +18,10 @@ package io.github.marktony.espresso.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.Build;
 
 /**
  * Created by lizhaotailang on 2017/3/27.
@@ -29,14 +32,30 @@ public class NetworkUtil {
     // whether connect to internet
     public static boolean networkConnected(Context context){
 
-        if (context != null){
-            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo info = manager.getActiveNetworkInfo();
-            if (info != null)
-                return info.isAvailable();
-        }
+        if (context == null) return false;
 
-        return false;
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager == null) return false;
+
+        // For Android M and above, use NetworkCapabilities
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Network activeNetwork = manager.getActiveNetwork();
+            if (activeNetwork == null) return false;
+            NetworkCapabilities caps = manager.getNetworkCapabilities(activeNetwork);
+            if (caps == null) return false;
+            // Check if network has internet transport (WiFi/Cellular/Ethernet/VPN)
+            if (caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                    || caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    || caps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+                    || caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
+                // Optionally also check for NET_CAPABILITY_INTERNET
+                return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+            }
+            return false;
+        } else {
+            NetworkInfo info = manager.getActiveNetworkInfo();
+            return info != null && info.isConnected();
+        }
     }
 
 }
