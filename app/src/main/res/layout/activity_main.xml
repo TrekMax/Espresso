@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 
-<androidx.swiperefreshlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -42,4 +42,4 @@
         app:itemTextColor="@drawable/nav_item_color"/>
 
 
-</androidx.swiperefreshlayout.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
