@@ -16,8 +16,8 @@
 
 package io.github.marktony.espresso.mvp.packagedetails;
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 import java.util.List;
 

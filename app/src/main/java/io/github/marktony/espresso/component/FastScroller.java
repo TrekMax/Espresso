@@ -27,11 +27,11 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.support.annotation.ColorInt;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.ColorInt;
+import androidx.core.content.ContextCompat;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -127,7 +127,7 @@ public class FastScroller {
                     }
                     mAutoHideAnimator = ObjectAnimator.ofInt(FastScroller.this, "offsetX",
                             ( mRecyclerView.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL ? -1 : 1) * mWidth);
-                    mAutoHideAnimator.setInterpolator(new FastOutLinearInInterpolator());
+                    mAutoHideAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
                     mAutoHideAnimator.setDuration(200);
                     mAutoHideAnimator.start();
                 }
@@ -278,7 +278,7 @@ public class FastScroller {
                 mAutoHideAnimator.cancel();
             }
             mAutoHideAnimator = ObjectAnimator.ofInt(this, "offsetX", 0);
-            mAutoHideAnimator.setInterpolator(new LinearOutSlowInInterpolator());
+            mAutoHideAnimator.setInterpolator(new DecelerateInterpolator());
             mAutoHideAnimator.setDuration(150);
             mAutoHideAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override

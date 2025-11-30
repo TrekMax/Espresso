@@ -16,8 +16,8 @@
 
 package io.github.marktony.espresso.data.source.local;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class PackagesLocalDataSource implements PackagesDataSource {
         Realm rlm = RealmHelper.newRealmInstance();
 
         return Observable.just(rlm.copyFromRealm(rlm.where(Package.class)
-                .findAllSorted("timestamp", Sort.DESCENDING)));
+                .sort("timestamp", Sort.DESCENDING).findAll()));
     }
 
     /**

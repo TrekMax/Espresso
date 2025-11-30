@@ -73,7 +73,7 @@ public class WidgetListFactory implements RemoteViewsService.RemoteViewsFactory 
                 .build())
                 .where(Package.class)
                 .notEqualTo("state", String.valueOf(Package.STATUS_DELIVERED))
-                .findAllSorted("timestamp", Sort.DESCENDING)
+                .sort("timestamp", Sort.DESCENDING).findAll()
                 .size();
     }
 
@@ -88,7 +88,7 @@ public class WidgetListFactory implements RemoteViewsService.RemoteViewsFactory 
                 .build());
         List<Package> results = rlm.copyFromRealm(rlm.where(Package.class)
                 .notEqualTo("state", String.valueOf(Package.STATUS_DELIVERED))
-                .findAllSorted("timestamp", Sort.DESCENDING));
+                .sort("timestamp", Sort.DESCENDING).findAll());
 
         Package p = results.get(position);
 

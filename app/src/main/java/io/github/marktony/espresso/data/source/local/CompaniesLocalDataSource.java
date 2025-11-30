@@ -16,8 +16,8 @@
 
 package io.github.marktony.espresso.data.source.local;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class CompaniesLocalDataSource implements CompaniesDataSource {
     public Observable<List<Company>> getCompanies() {
         Realm rlm = RealmHelper.newRealmInstance();
         return Observable
-                .fromIterable(rlm.copyFromRealm(rlm.where(Company.class).findAllSorted("alphabet", Sort.ASCENDING)))
+                .fromIterable(rlm.copyFromRealm(rlm.where(Company.class).sort("alphabet", Sort.ASCENDING).findAll()))
                 .toList()
                 .toObservable();
     }
@@ -729,7 +729,7 @@ public class CompaniesLocalDataSource implements CompaniesDataSource {
                         .like("website", "*" + keyWords + "*", Case.INSENSITIVE)
                         .or()
                         .like("alphabet", "*" + keyWords + "*", Case.INSENSITIVE)
-                        .findAllSorted("alphabet", Sort.ASCENDING));
+                        .sort("alphabet", Sort.ASCENDING).findAll());
         return Observable.fromIterable(results)
                 .toList()
                 .toObservable();

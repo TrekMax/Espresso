@@ -19,9 +19,9 @@ package io.github.marktony.espresso.ui;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -79,7 +79,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     }
                     // The final params setting true means that it is 24 hours mode.
                 }, startHour, startMinute, true);
-                dialog.show(getActivity().getFragmentManager(), "StartTimePickerDialog");
+                dialog.show(getParentFragmentManager(), "StartTimePickerDialog");
 
                 return true;
             }
@@ -105,7 +105,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     }
                     // The final params setting true means that it is 24 hours mode.
                 }, endHour, endMinute, true);
-                dialog.show(getActivity().getFragmentManager(), "StartTimePickerDialog");
+                dialog.show(getParentFragmentManager(), "StartTimePickerDialog");
 
                 return true;
             }

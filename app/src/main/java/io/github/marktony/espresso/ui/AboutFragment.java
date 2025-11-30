@@ -23,12 +23,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
-import io.github.marktony.espresso.BuildConfig;
+// BuildConfig import removed - will use direct version string
 import io.github.marktony.espresso.R;
 import io.github.marktony.espresso.customtabs.CustomTabsHelper;
 
@@ -51,7 +51,13 @@ public class AboutFragment extends PreferenceFragmentCompat {
 
         initPrefs();
 
-        prefVersion.setSummary(BuildConfig.VERSION_NAME);
+        try {
+            String versionName = getActivity().getPackageManager()
+                    .getPackageInfo(getActivity().getPackageName(), 0).versionName;
+            prefVersion.setSummary(versionName);
+        } catch (Exception e) {
+            prefVersion.setSummary("1.0");
+        }
 
         // Rate
         prefRate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

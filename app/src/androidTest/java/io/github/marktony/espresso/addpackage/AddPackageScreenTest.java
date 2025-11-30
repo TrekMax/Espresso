@@ -1,10 +1,10 @@
 package io.github.marktony.espresso.addpackage;
 
 import android.os.Build;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,18 +14,18 @@ import org.junit.runner.RunWith;
 import io.github.marktony.espresso.R;
 import io.github.marktony.espresso.mvp.addpackage.AddPackageActivity;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static android.support.test.InstrumentationRegistry.getTargetContext;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.platform.app.InstrumentationRegistry.getTargetContext;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 
 /**
@@ -81,7 +81,7 @@ public class AddPackageScreenTest {
         onView(withId(R.id.fab)).perform(click());
 
         // Check that the snack bar was displayed.
-        onView(allOf(withId(android.support.design.R.id.snackbar_text),
+        onView(allOf(withId(com.google.android.material.R.id.snackbar_text),
                 withText(R.string.wrong_number_and_check)))
                 .check(matches(isDisplayed()));
     }
@@ -125,7 +125,7 @@ public class AddPackageScreenTest {
                 .check(matches(withText(name)));
 
         // Check that the snack bar with error message was displayed.
-        onView(allOf(withId(android.support.design.R.id.snackbar_text),
+        onView(allOf(withId(com.google.android.material.R.id.snackbar_text),
                 withText(R.string.wrong_number_and_check)))
                 .check(matches(isDisplayed()));
     }
@@ -151,7 +151,7 @@ public class AddPackageScreenTest {
                 .check(matches(withText("")));
 
         // Check that the snack bar with error message was displayed.
-        onView(allOf(withId(android.support.design.R.id.snackbar_text),
+        onView(allOf(withId(com.google.android.material.R.id.snackbar_text),
                 withText(R.string.wrong_number_and_check)))
                 .check(matches(isDisplayed()));
     }

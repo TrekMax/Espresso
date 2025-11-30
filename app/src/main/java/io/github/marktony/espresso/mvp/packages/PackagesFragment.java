@@ -24,17 +24,17 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -105,20 +105,13 @@ public class PackagesFragment extends Fragment
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-
-                    case R.id.nav_all:
-                        presenter.setFiltering(PackageFilterType.ALL_PACKAGES);
-                        break;
-
-                    case R.id.nav_on_the_way:
-                        presenter.setFiltering(PackageFilterType.ON_THE_WAY_PACKAGES);
-                        break;
-
-                    case R.id.nav_delivered:
-                        presenter.setFiltering(PackageFilterType.DELIVERED_PACKAGES);
-                        break;
-
+                int itemId = item.getItemId();
+                if (itemId == R.id.nav_all) {
+                    presenter.setFiltering(PackageFilterType.ALL_PACKAGES);
+                } else if (itemId == R.id.nav_on_the_way) {
+                    presenter.setFiltering(PackageFilterType.ON_THE_WAY_PACKAGES);
+                } else if (itemId == R.id.nav_delivered) {
+                    presenter.setFiltering(PackageFilterType.DELIVERED_PACKAGES);
                 }
                 presenter.loadPackages();
 
@@ -175,21 +168,16 @@ public class PackagesFragment extends Fragment
         if (item == null || selectedPackageNumber == null) {
             return false;
         }
-        switch (item.getItemId()) {
-            case R.id.action_set_readable:
-                presenter.setPackageReadable(
-                        getSelectedPackageNumber(),
-                        !item.getTitle().equals(getString(R.string.set_read)));
-                adapter.notifyDataSetChanged();
-                break;
-            case R.id.action_copy_code:
-                copyPackageNumber();
-                break;
-            case R.id.action_share:
-                presenter.setShareData(getSelectedPackageNumber());
-                break;
-            default:
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_set_readable) {
+            presenter.setPackageReadable(
+                    getSelectedPackageNumber(),
+                    !item.getTitle().equals(getString(R.string.set_read)));
+            adapter.notifyDataSetChanged();
+        } else if (itemId == R.id.action_copy_code) {
+            copyPackageNumber();
+        } else if (itemId == R.id.action_share) {
+            presenter.setShareData(getSelectedPackageNumber());
         }
         return true;
     }

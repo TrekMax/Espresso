@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.marktony.espresso">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -26,6 +25,7 @@
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:noHistory="true"
+            android:exported="true"
             android:theme="@style/AppTheme.Onboarding">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,6 +59,7 @@
         <activity
             android:name=".zxing.CaptureActivity"
             android:label="@string/activity_scan_code"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="io.github.marktony.espresso.zxing.CaptureActivity" />
@@ -72,7 +73,8 @@
             android:name=".appwidget.AppWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <receiver android:name=".appwidget.AppWidgetProvider">
+        <receiver android:name=".appwidget.AppWidgetProvider"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
