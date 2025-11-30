@@ -23,8 +23,8 @@ package io.github.marktony.espresso.retrofit;
 
 public class Api {
 
-    // Base API
-    public static final String API_BASE = "http://www.kuaidi100.com/";
+    // Base API (use HTTPS to avoid cleartext network issues on modern Android)
+    public static final String API_BASE = "https://www.kuaidi100.com/";
 
     // Get status of a specific number
     public static final String PACKAGE_STATE = API_BASE + "query";
