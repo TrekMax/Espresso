@@ -17,6 +17,7 @@
 package io.github.marktony.espresso.appwidget;
 
 import android.app.PendingIntent;
+import android.os.Build;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -61,8 +62,12 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
         Intent tempIntent = new Intent(context, PackageDetailsActivity.class);
         tempIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        int flags = PendingIntent.FLAG_CANCEL_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
         remoteViews.setPendingIntentTemplate(R.id.listViewWidget,
-                PendingIntent.getActivity(context, 0, tempIntent, PendingIntent.FLAG_CANCEL_CURRENT));
+            PendingIntent.getActivity(context, 0, tempIntent, flags));
 
         return remoteViews;
     }

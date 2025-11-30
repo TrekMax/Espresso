@@ -20,6 +20,7 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.os.Build;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -178,7 +179,11 @@ public class ReminderService extends IntentService {
             i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             i.putExtra(PackageDetailsActivity.PACKAGE_ID, pkg.getNumber());
 
-            PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), position, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            int pendingFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                pendingFlags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), position, i, pendingFlags);
 
             String title = pkg.getName();
             String subject;
