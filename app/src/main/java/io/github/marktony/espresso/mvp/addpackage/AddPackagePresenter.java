@@ -94,10 +94,12 @@ public class AddPackagePresenter implements AddPackageContract.Presenter{
                 .subscribeWith(new DisposableObserver<CompanyRecognition>() {
                     @Override
                     public void onNext(CompanyRecognition value) {
-
-                        if (value.getAuto().size() > 0 && value.getAuto().get(0).getCompanyCode() != null) {
+                        // Guard against null or empty 'auto' list returned by the API
+                        if (value != null && value.getAuto() != null && !value.getAuto().isEmpty()
+                                && value.getAuto().get(0) != null && value.getAuto().get(0).getCompanyCode() != null) {
                             checkPackageLatestStatus(value.getAuto().get(0).getCompanyCode(), number, name, color);
                         } else {
+                            Log.w("AddPackagePresenter", "CompanyRecognition.auto is null/empty or has no companyCode: " + value);
                             view.showNumberError();
                             view.setProgressIndicator(false);
                         }
