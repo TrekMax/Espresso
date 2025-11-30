@@ -18,6 +18,7 @@ package io.github.marktony.espresso.mvp.packages;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import android.util.Log;
 
 import java.util.List;
 
@@ -133,9 +134,9 @@ public class PackagesPresenter implements PackagesContract.Presenter {
     @Override
     public void refreshPackages() {
         Disposable disposable = packagesRepository
-                .refreshPackages()
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+            .refreshPackages()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<List<Package>>() {
                     @Override
                     public void onNext(List<Package> value) {
@@ -144,6 +145,8 @@ public class PackagesPresenter implements PackagesContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        // Log the error to help debugging network/retrofit issues
+                        Log.e("PackagesPresenter", "refreshPackages error", e);
                         view.setLoadingIndicator(false);
                         view.showNetworkError();
                     }

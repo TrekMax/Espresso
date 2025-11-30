@@ -17,6 +17,7 @@
 package io.github.marktony.espresso.mvp.addpackage;
 
 import androidx.annotation.NonNull;
+import android.util.Log;
 
 import io.github.marktony.espresso.data.Company;
 import io.github.marktony.espresso.data.CompanyRecognition;
@@ -104,6 +105,7 @@ public class AddPackagePresenter implements AddPackageContract.Presenter{
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("AddPackagePresenter", "checkNumber error", e);
                         view.showNumberError();
                         view.setProgressIndicator(false);
                         view.showNetworkError();
