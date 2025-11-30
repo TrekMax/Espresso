@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.os.Build;
 
 import java.util.Calendar;
 
@@ -44,7 +45,11 @@ public class PushUtil {
         if (alert) {
             AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(context, service);
-            PendingIntent pendingIntent = PendingIntent.getService(context, 10000, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            int flags = PendingIntent.FLAG_CANCEL_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent pendingIntent = PendingIntent.getService(context, 10000, intent, flags);
             manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, 0, interval, pendingIntent);
             Log.d(TAG, "startAlarmService");
         }
@@ -53,7 +58,11 @@ public class PushUtil {
     public static void stopAlarmService(Context context, Class<?> service) {
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, service);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 10000, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        int flags = PendingIntent.FLAG_CANCEL_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingIntent = PendingIntent.getService(context, 10000, intent, flags);
         manager.cancel(pendingIntent);
         Log.d(TAG, "stopAlarmService");
     }
